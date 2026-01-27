@@ -50,7 +50,10 @@ export async function updateStatusCheckerState(
     }
 
     if (update.scrapeInfo && Object.keys(update.scrapeInfo).length > 0) {
-        next.scrapeInfo = update.scrapeInfo;
+        next.scrapeInfo = {
+            ...next.scrapeInfo,
+            ...update.scrapeInfo,
+        };
         hasUpdates = true;
     }
 
