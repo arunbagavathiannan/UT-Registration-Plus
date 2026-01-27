@@ -114,15 +114,17 @@ export async function refreshStatusForActiveSchedule(): Promise<StatusCheckerRef
         };
     }
 
+    const mergedScrapeInfo = { ...state.scrapeInfo, ...nextScrapeInfo };
+
     // Detect status changes without using scrapedAt.
-    const nextKeys = Object.keys(nextScrapeInfo);
+    const mergedKeys = Object.keys(mergedScrapeInfo);
     const existingKeys = Object.keys(state.scrapeInfo);
-    let hasStatusChanges = existingKeys.length !== nextKeys.length;
+    let hasStatusChanges = existingKeys.length !== mergedKeys.length;
 
     if (!hasStatusChanges) {
-        for (const key of nextKeys) {
+        for (const key of mergedKeys) {
             const existing = state.scrapeInfo[key];
-            const next = nextScrapeInfo[key];
+            const next = mergedScrapeInfo[key];
 
             if (!next || !existing || existing.status !== next.status || existing.isReserved !== next.isReserved) {
                 hasStatusChanges = true;
@@ -144,7 +146,7 @@ export async function refreshStatusForActiveSchedule(): Promise<StatusCheckerRef
 
     const updatedState = await updateStatusCheckerState({
         lastCheckedAt: now,
-        scrapeInfo: nextScrapeInfo,
+        scrapeInfo: mergedScrapeInfo,
     });
 
     return {
