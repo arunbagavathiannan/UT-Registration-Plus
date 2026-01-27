@@ -11,6 +11,7 @@ import calendarBackgroundHandler from './handler/calendarBackgroundHandler';
 import CESHandler from './handler/CESHandler';
 import tabManagementHandler from './handler/tabManagementHandler';
 import userScheduleHandler from './handler/userScheduleHandler';
+import statusCheckerHandler from '../../connector/statusCheckerHandler';
 
 onServiceWorkerAlive();
 
@@ -52,6 +53,7 @@ const messageListener = new MessageListener<BACKGROUND_MESSAGES>({
     ...userScheduleHandler,
     ...CESHandler,
     ...calendarBackgroundHandler,
+    ...statusCheckerHandler,
 });
 
 messageListener.listen();
