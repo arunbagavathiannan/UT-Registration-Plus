@@ -187,6 +187,7 @@ export default defineConfig({
                 }
             },
         },
+        renameFile('src/pages/sidebar/index.html', 'sidebar.html'),
         renameFile('src/pages/debug/index.html', 'debug.html'),
         renameFile('src/pages/options/index.html', 'options.html'),
         renameFile('src/pages/calendar/index.html', 'calendar.html'),
@@ -237,6 +238,10 @@ export default defineConfig({
             clientPort: 5173,
         },
         proxy: {
+            '/sidebar.html': {
+                target: 'http://localhost:5173',
+                rewrite: path => path.replace('sidebar', 'src/pages/sidebar/index'),
+            },
             '/debug.html': {
                 target: 'http://localhost:5173',
                 rewrite: path => path.replace('debug', 'src/pages/debug/index'),
@@ -272,6 +277,7 @@ export default defineConfig({
         sourcemap: true,
         rollupOptions: {
             input: {
+                sidebar: 'src/pages/sidebar/index.html',
                 debug: 'src/pages/debug/index.html',
                 calendar: 'src/pages/calendar/index.html',
                 options: 'src/pages/options/index.html',
