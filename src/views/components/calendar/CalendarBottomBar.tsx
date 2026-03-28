@@ -1,3 +1,4 @@
+// CalendarBottomBar component ()
 import { initSettings, OptionsStore } from '@shared/storage/OptionsStore';
 import type { Course } from '@shared/types/Course';
 import { Status } from '@shared/types/Course';
